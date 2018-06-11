@@ -1,0 +1,297 @@
+/* css resets */
+@font-face {
+  font-family: Lato;
+  src: url("../libraries/font-awesome/Lato-Light.ttf");
+}
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+}
+a {
+  text-decoration: none;
+}
+h2 {
+  color: #999da1;
+  letter-spacing: 1px;
+  font-weight: 100;
+  font-size: 1.5em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* animated burger menu from - https://codepen.io/JenyaNem/pen/MvqGKJ?editors=0010 */
+.barscontainer {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50px;
+  right: -50px;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.barscontainer svg path, 
+.barscontainer svg line {
+  stroke: #000;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  fill: none;
+  transition: 0.2s;
+}
+.barstrigger {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 5;
+  top: 0;
+  left: 0;
+}
+
+/* menu dialog */
+.menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
+  overflow: hidden;
+  z-index: 1;
+}
+.menu .btn {
+  width: calc(100vw - 100px);
+  height: calc(100vh / 5 - 6px);
+  margin: 5px auto;
+  color: #000;
+  background: #e7f0f5;
+  border: 1px solid #b3b3b3;
+  outline: 0;
+}
+
+/* reload button */
+.reload {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  outline: 0;
+}
+.reload img {
+  width: 50px;
+}
+
+/* make menu buttons smaller on phones */
+@media all and (max-width: 360px) {
+  .barscontainer, .reload {
+    transform: translate(-50%, -50%) scale(.5);
+  }
+  .barscontainer {
+    margin: -25px;
+  }
+}
+
+/* color picker placement */
+.cp-holder {
+  position: absolute;
+  bottom: 0;
+}
+.cp-left {
+  left: 0;
+}
+.cp-right {
+  right: 0;
+}
+.cp-holder.cp-right .minicolors-theme-default .minicolors-input {
+  width: 165px;
+}
+
+/* center content horizontally and vertically */
+.table {
+  display: table;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+.cell {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* viewer styles for character */
+.viewer {
+  background: #f3fff1;
+}
+.viewer svg {
+  margin: 13px auto;
+  width: 100%;
+  height: calc(100% - 30px);
+}
+
+/* category styles like face, nose, etc: */
+.categories {
+/*  width: 128px;*/
+  height: 100%;
+  overflow: auto;
+  border-left: 1px solid #d1d1d1;
+}
+.category {
+  cursor: pointer;
+  display: block;
+  width: 108px;
+  height: 108px;
+  margin: 5px;
+  border-bottom: 1px solid #d1d1d1;
+  outline: 0;
+  background-size: cover;
+}
+
+.categories .head {
+  background-image: url('../categories/head.svg');
+}
+.categories .face {
+  background-image: url('../categories/face.svg');
+}
+.categories .neck {
+  background-image: url('../categories/neck.svg');
+}
+.categories .rear-hair {
+  background-image: url('../categories/hair.svg');
+}
+.categories .front-hair {
+  background-image: url('../categories/front-hair.svg');
+}
+.categories .ears {
+  background-image: url('../categories/ears.svg');
+}
+.categories .eyes {
+  background-image: url('../categories/eyes.svg');
+}
+.categories .eyebrows {
+  background-image: url('../categories/eyebrows.svg');
+}
+.categories .nose {
+  background-image: url('../categories/nose.svg');
+}
+.categories .mouth {
+  background-image: url('../categories/mouth.svg');
+}
+.categories .collar {
+  background-image: url('../categories/collar.svg');
+}
+.categories .tshirt {
+  background-image: url('../categories/tshirt.svg');
+}
+.categories .background {
+  background-image: url('../categories/background.svg');
+}
+.categories .bg-border {
+  background-image: url('../categories/bg-border.svg');
+}
+
+/* assets styles for categories like face */
+.features {
+  height: 100%;
+  overflow: auto;
+}
+.feature, .asset {
+  display: inline-block;
+}
+.feature.head,
+.feature.face,
+.feature.neck,
+.feature.collar,
+.feature.tshirt,
+.feature.bg-border,
+.feature.background {
+  width: 100%;
+  height: 100%;
+}
+.asset {
+  cursor: pointer;
+  width: 100px;
+  margin: 5px 0 5px 5px;
+  border: 1px solid #d1d1d1;
+}
+.asset svg {
+  width: 100px;
+  height: auto;
+}
+
+/* move settings */
+.move-holder {
+  position: absolute;
+  top: 0;
+  font-size: 2em;
+  margin-left: 5px;
+  color: #666;
+  z-index: 1;
+}
+.settings-panel {
+  padding-left: 25px;
+  height: calc(100% - 3px);
+}
+.settings-panel h2 input[type=number] {
+  width: calc(100% / 1.5);
+}
+.settings-panel input[type=range] {
+  width: calc(100vw - 200px);
+  padding: 0;
+  display: block;
+  margin: auto;
+}
+@media all and (max-width: 560px) {
+  .settings-panel h2 input[type=number] {
+    width: calc(100% - 6px);
+  }
+}
+
+/* for donate dialog */
+.donatebanner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #ebfff1;
+  z-index: 2;
+}
+.donatebanner h2 {
+  position: relative; 
+  margin-bottom: -1em;
+}
+.donatebanner .donate {
+  margin: auto;
+  display: block;
+}
+.donatebanner .table .cell div {
+  width: 357px;
+  margin: -20px auto;
+  display: inline-block;
+}
+.donatebanner .table .cell div img {
+  cursor: pointer;
+  height: 56px;
+}
+
+/* global classes */
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.hide {
+  display: none;
+}
+.pointer {
+  cursor: pointer;
+}
+.tl {
+  text-align: left;
+}
+.tc {
+  text-align: center;
+}
