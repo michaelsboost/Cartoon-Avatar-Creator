@@ -45,6 +45,9 @@ Want to contribute? Great!
 
 The Cartoon Avatar Creator is no longer an active project however you can submit a pull request or simply share the project :)
 
+*As of August 11, 2018 The Cartoon Avatar Creator is no longer an active project.
+All updates as of that date and on are solely contributor based implementations.*
+
 Of course the app is free and open source, so you can always fork the project and have fun :)
 
 [![ko-fi](https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0)](https://ko-fi.com/michaelsboost)
