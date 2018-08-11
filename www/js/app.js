@@ -308,66 +308,6 @@ document.addEventListener('deviceready', function() {
              { size: "50%" }]
   });
 
-  // save file from donate dialog
-  $("[data-class=setexport]").change(function() {
-    // save as svg image
-    $(".svg-export[data-class=setexport]").click(function() {
-      $(".donatebanner").fadeOut();
-
-      swal({
-        title: 'File name below!',
-        input: 'text',
-        inputPlaceholder: ".svg is added on save",
-        showCancelButton: true,
-        confirmButtonText: 'Save',
-        showLoaderOnConfirm: true
-      }).then((result) => {
-        if (result.value) {
-          blob = new Blob([ $(".viewer").html() ], {type: "text/html"});
-          saveFile(blob, result.value + ".svg");
-
-          swal(
-            'Yay!',
-            'You\'re was character successfully saved!',
-            'success'
-          );
-        } else {
-          swal(
-            'Oops!',
-            console.error().toString(),
-            'error'
-          );
-        }
-      });
-    });
-
-    // save as png image
-    $(".png-export[data-class=setexport]").click(function() {
-      $(".donatebanner").fadeOut();
-
-      swal({
-        title: 'File name below!',
-        input: 'text',
-        inputPlaceholder: ".png is added on save",
-        showCancelButton: true,
-        confirmButtonText: 'Save',
-        showLoaderOnConfirm: true
-      }).then((result) => {
-        if (result.value) {
-          saveAsPNG(result.value);
-        } else {
-          swal(
-            'Oops!',
-            console.error().toString(),
-            'error'
-          );
-        }
-      });
-    });
-
-    return false;
-  });
-
   // hamburger menu settings
   Moveit.put(first, {
       start: '0%',
@@ -448,12 +388,60 @@ document.addEventListener('deviceready', function() {
 
   // open donate dialog
   $("[data-action=export]").click(function() {
+    
+    // save as svg image
+    if ( $(this).hasClass('svg-export') ) {
+      swal({
+        title: 'File name below!',
+        input: 'text',
+        inputPlaceholder: ".svg is added on save",
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        showLoaderOnConfirm: true
+      }).then((result) => {
+        if (result.value) {
+          blob = new Blob([ $(".viewer").html() ], {type: "text/html"});
+          saveFile(blob, result.value + ".svg");
 
-    // before export ask to donate
-    $("[data-class=setexport]").attr("class", this.className.toString()).trigger("change"); 
-
-    // opens donate dialog
-    $(".donatebanner").fadeIn();
+          swal(
+            'Yay!',
+            'You\'re was character successfully saved!',
+            'success'
+          );
+        } else {
+          swal(
+            'Oops!',
+            console.error().toString(),
+            'error'
+          );
+        }
+      });
+    } else if ( $(this).hasClass("png-export") ) {
+      swal({
+        title: 'File name below!',
+        input: 'text',
+        inputPlaceholder: ".png is added on save",
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        showLoaderOnConfirm: true
+      }).then((result) => {
+        if (result.value) {
+          saveAsPNG(result.value);
+        } else {
+          swal(
+            'Oops!',
+            console.error().toString(),
+            'error'
+          );
+        }
+      });
+    } else {
+      swal(
+        'Oops!',
+        "Couldn't save image or vector!",
+        'error'
+      );
+    }
 
     // close menu
     $(".barstrigger").trigger("click");
