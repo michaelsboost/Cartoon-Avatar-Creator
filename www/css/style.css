@@ -184,6 +184,9 @@ h2 {
 .categories .tshirt {
   background-image: url('../categories/tshirt.svg');
 }
+.categories .misc {
+  background-image: url('../categories/misc.svg');
+}
 .categories .background {
   background-image: url('../categories/background.svg');
 }
