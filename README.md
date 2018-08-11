@@ -1,7 +1,7 @@
 Cartoon Avatar Creator
 ===================
 
-Just a simple vector based cartoon avatar creator
+Just a simple vector-based cartoon avatar creator
 
 ![](https://raw.githubusercontent.com/michaelsboost/Cartoon-Avatar-Creator/gh-pages/screenshot.png)
 
@@ -18,7 +18,7 @@ MIT
 Availability
 -------------
 
-Currently, this app is only available as a web application.
+[Online](http://michaelsboost.github.io/Cartoon-Avatar-Creator) and [Android](https://play.google.com/store/apps/details?id=com.webdgap.cartoonavatarcreator)
 
 In the meatime, if you want this as a desktop application you can use
 [WebDGap](http://michaelsboost.github.io/WebDGap)  
