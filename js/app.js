@@ -53,7 +53,7 @@ var defaultColor,
     },
     appendPicker = function() {
       // some categories do not need color picker
-      if ($(".head, .nose").hasClass("active")) {
+      if ($(".head, .nopicker").hasClass("active")) {
         $('.cp-holder').empty();
         return false;
       }
