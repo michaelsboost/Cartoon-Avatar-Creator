@@ -25,7 +25,7 @@ Availability
 In the meatime, if you want this as a desktop application you can use
 [WebDGap](http://michaelsboost.github.io/WebDGap)  
 
-If you like the Cartoon Avatar Creator you may also like the Flat Design Character Maker.
+If you like the Cartoon Avatar Creator you may also like the [Flat Design Character Maker](http://michaelsboost.github.io/Flat-Design-Character-Maker).
 
 [![Flat Design Character Maker](https://raw.githubusercontent.com/michaelsboost/Flat-Design-Character-Maker/gh-pages/screenshot.png)](http://michaelsboost.github.io/Flat-Design-Character-Maker)
 
