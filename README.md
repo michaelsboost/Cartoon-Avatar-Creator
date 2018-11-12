@@ -20,6 +20,8 @@ Availability
 
 [Online](http://michaelsboost.github.io/Cartoon-Avatar-Creator) and [Android](https://play.google.com/store/apps/details?id=com.webdgap.cartoonavatarcreator)
 
+[![Android](https://michaelsboost.github.io/Cartoon-Avatar-Creator/imgs/google-play-badge.png)](https://play.google.com/store/apps/details?id=com.webdgap.cartoonavatarcreator)
+
 In the meatime, if you want this as a desktop application you can use
 [WebDGap](http://michaelsboost.github.io/WebDGap)  
 
