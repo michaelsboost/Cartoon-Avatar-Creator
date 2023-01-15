@@ -3,53 +3,13 @@ var defaultColor,
     open = false,
     duration  = 0.3,
     timing    = 'cubic-bezier(0.7, 0, 0.3, 1)',
+    appData = {
+      checkHands: '',
+      category: '',
+      design: ''
+    },
     saveAsPNG = function(value) {
       saveSvgAsPng(document.getElementById("character"), value + ".png");
-    },
-    initializeLocalStorage = function() {
-      if ( localStorage.getItem("checkHands")) {
-        // detect ui left or right handed
-        if ( localStorage.getItem("checkHands") === "leftHanded" ) {
-          // switch to left handed
-          $(".cp-holder").addClass("cp-right");
-          $(".cp-holder").removeClass("cp-left");
-
-          $(".categories").addClass("fl");
-          $(".categories").removeClass("fr");
-
-          $('.picker').minicolors({
-            position: 'top right'
-          });
-          
-          $("[data-action=switch-hands]").text("Switch to right handed");
-        } else {
-          // switch to right handed
-          $(".cp-holder").addClass("cp-left");
-          $(".cp-holder").removeClass("cp-right");
-
-          $(".categories").addClass("fr");
-          $(".categories").removeClass("fl");
-
-          $('.picker').minicolors({
-            position: 'top left'
-          });
-          
-          $("[data-action=switch-hands]").text("Switch to left handed");
-        }
-      }
-      if ( localStorage.getItem("rememberCategory")) {
-        var rememberedClass = $(".categories .category[data-call=" + localStorage.getItem("rememberCategory") + "]");
-        
-        setTimeout(function() {
-          rememberedClass.trigger("click");
-        });
-      }
-      if ( localStorage.getItem("rememberDesign")) {
-        $(".viewer").html(localStorage.getItem("rememberDesign"));
-      }
-    },
-    rememberDesign = function() {
-      localStorage.setItem("rememberDesign", $(".viewer").html());
     },
     appendPicker = function() {
       // some categories do not need color picker
@@ -72,7 +32,7 @@ var defaultColor,
           position: 'top left',
           change: function(value, opacity) {
             $("#background").css('fill', this.value);
-            rememberDesign();
+            updateStorage();
           }
         });
       }
@@ -87,7 +47,7 @@ var defaultColor,
           position: 'top left',
           change: function(value, opacity) {
             $("#bg-border").css('fill', this.value);
-            rememberDesign();
+            updateStorage();
           }
         });
       } else if ($(".face").hasClass("active")) {
@@ -99,7 +59,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #face-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -112,7 +72,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #neck-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -125,7 +85,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #rear-hair #rear-hair-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -138,7 +98,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #front-hair #hair-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -151,7 +111,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #ears #ear-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -164,7 +124,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #eyebrows #brow-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -182,7 +142,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #eyes .eye-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -200,7 +160,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #mouth .mouth-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -213,7 +173,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #shirt-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -226,7 +186,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #collar-color path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -239,7 +199,7 @@ var defaultColor,
           change: function(value, opacity) {
             if ($("[data-call]").hasClass("active")) {
               $(".viewer svg #head #"+ $(".active[data-call]").attr("data-call") +" path").attr('fill', this.value);
-              rememberDesign();
+              updateStorage();
             }
           }
         });
@@ -251,6 +211,16 @@ var defaultColor,
       a.href = url;
       a.click();
     };
+
+// remember design in localStorage
+function updateStorage() {
+  // push character to localStorage
+  appData.checkHands = $("[data-action=switch-hands]").text();
+  appData.category   = $(".categories .category.active").attr('data-call');
+  appData.design     = $(".viewer").html();
+
+  localStorage.setItem('CartoonAvatarCreator', JSON.stringify(appData));
+}
 
 // resizable container
 $('#mainSplitter').jqxSplitter({
@@ -423,8 +393,6 @@ $("[data-action=export]").click(function() {
 $("[data-action=switch-hands]").click(function() {
   // detect ui left or right handed
   if ( $(".cp-holder").hasClass("cp-left") ) {
-    localStorage.setItem("checkHands", "leftHanded");
-    
     // switch to left handed
     $(".cp-holder").addClass("cp-right");
     $(".cp-holder").removeClass("cp-left");
@@ -438,8 +406,6 @@ $("[data-action=switch-hands]").click(function() {
     
     this.textContent = "Switch to right handed";
   } else {
-    localStorage.setItem("checkHands", "rightHanded");
-
     // switch to right handed
     $(".cp-holder").addClass("cp-left");
     $(".cp-holder").removeClass("cp-right");
@@ -453,9 +419,12 @@ $("[data-action=switch-hands]").click(function() {
     
     this.textContent = "Switch to left handed";
   }
-  
+
   // close menu
   $(".barstrigger").trigger("click");
+  
+  // update localStorage
+  updateStorage()
 });
 
 // clear saved character
@@ -467,7 +436,7 @@ $("[data-revert=design]").click(function() {
     showCancelButton: true
   }).then((result) => {
     if (result.value) {
-      localStorage.clear("rememberDesign");
+      localStorage.clear();
       location.reload(true);
     }
   })
@@ -481,22 +450,11 @@ $("[data-href]").click(function() {
 // sets the color picker
 appendPicker();
 
-// save design via localStorage
-initializeLocalStorage();
-
-// if no category is remembered hide settings dialog text and only show background's
-if (!localStorage.getItem("rememberCategory")) {
-  $(".move-holder, .feature[data-display]").hide();
-  $(".feature[data-display=background]").show();
-}
-
 // change categories
 $(".categories .category").on("click", function() {
-  // save active category
-  localStorage.setItem("rememberCategory", $(this).attr("data-call"));
-  
   // check if this category is already active
   if ($(this).hasClass("active")) {
+    updateStorage()
     return false;
   }
   $("[data-toggle=settings-panel]").hide();
@@ -518,13 +476,16 @@ $(".categories .category").on("click", function() {
   
   // color picker should only be visible for some attributes
   appendPicker();
+
+  // remember changes in localStorage
+  updateStorage()
 });
 
 // change character attributes
 $(".asset").on("click", function() {
   $(".viewer #character #head #" + $(".active[data-call]").attr("data-call")).html($(this).find("g#change").html());
   
-  rememberDesign();
+  updateStorage();
   appendPicker();
 });
 
@@ -548,7 +509,7 @@ $("#scaleadj, #translatexadj, #translateyadj").on("change", function() {
   } else {
     $(".viewer #character #head #" + $(".active[data-call]").attr("data-call")).attr("transform", "scale("+ $("#scaleadj").val() +") translate("+ $("#translatexadj").val() +", "+ $("#translateyadj").val() +")");
   }
-  rememberDesign();
+  updateStorage();
 });
 $("#scalerange").on("change", function() {
   $("#scaleadj").val(this.value).trigger("change");
@@ -559,3 +520,51 @@ $("#translatexrange").on("change", function() {
 $("#translateyrange").on("change", function() {
   $("#translateyadj").val(this.value).trigger("change");
 });
+
+if (!localStorage.getItem('CartoonAvatarCreator')) {
+  updateStorage()
+} else {
+  appData = JSON.parse(localStorage.getItem('CartoonAvatarCreator'));
+
+  // update avatar design
+  $(".viewer").html(appData.design);
+
+  // go to remembered category
+  $(".categories .category[data-call="+ appData.category +"]").click();
+
+  // If stored data says 'switch to right handed'
+  // means that the user chose to have the tabs
+  // open the categories on the left
+  if (appData.checkHands === 'Switch to left handed') {
+    $(".cp-holder").addClass("cp-left");
+    $(".cp-holder").removeClass("cp-right");
+
+    $(".categories").addClass("fr");
+    $(".categories").removeClass("fl");
+
+    $('.picker').minicolors({
+      position: 'top left'
+    });
+    
+    $("[data-action=switch-hands]").text("Switch to left handed");
+  }
+
+  // If stored data says 'switch to left handed'
+  // means that the user chose to have the tabs
+  // open the categories on the right
+  if (appData.checkHands === 'Switch to right handed') {
+    $(".cp-holder").addClass("cp-right");
+    $(".cp-holder").removeClass("cp-left");
+
+    $(".categories").addClass("fl");
+    $(".categories").removeClass("fr");
+
+    $('.picker').minicolors({
+      position: 'top right'
+    });
+    
+    $("[data-action=switch-hands]").text("Switch to right handed");
+  }
+
+  localStorage.setItem('CartoonAvatarCreator', JSON.stringify(appData));
+}
